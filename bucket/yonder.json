@@ -1,11 +1,11 @@
 {
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "your site, over yonder: share a localhost site or files with your phone via a QR code",
   "homepage": "https://github.com/dpologdvinity/yonder",
   "license": "MIT",
   "architecture": {
-    "64bit": { "url": "https://github.com/dpologdvinity/yonder/releases/download/v0.4.4/yonder_0.4.4_windows_amd64.zip", "hash": "8bcca3359c47e924a08c2b5753e976f235a74fea0c8fee998ab00cad4fbaa3f2" },
-    "arm64": { "url": "https://github.com/dpologdvinity/yonder/releases/download/v0.4.4/yonder_0.4.4_windows_arm64.zip", "hash": "94bd74151cbc37672d8a043e9685e50b11a7ca659a673342c4c2a14fc7ebc8b9" }
+    "64bit": { "url": "https://github.com/dpologdvinity/yonder/releases/download/v0.5.0/yonder_0.5.0_windows_amd64.zip", "hash": "36faf977ba23fe563f19f1f01357c0a9326d174b4f2b52aef4277e18ba2a328b" },
+    "arm64": { "url": "https://github.com/dpologdvinity/yonder/releases/download/v0.5.0/yonder_0.5.0_windows_arm64.zip", "hash": "ff5371a4d0c0834245919161b124f5a922cfc7e2f9dbf73bb21da6332c482771" }
   },
   "bin": "yonder.exe"
 }
