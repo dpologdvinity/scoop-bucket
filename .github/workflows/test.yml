@@ -1,0 +1,36 @@
+name: test manifests
+
+# Installs every manifest with Scoop on Windows and runs the program, so a broken
+# URL, hash or bin name fails here rather than for users.
+on:
+  push:
+    branches: [master]
+    paths: ["bucket/**", ".github/workflows/test.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: install Scoop
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
+          ./install.ps1 -RunAsAdmin
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\scoop\shims"
+      - name: install and run every manifest
+        shell: pwsh
+        run: |
+          scoop bucket add local "$env:GITHUB_WORKSPACE"
+          foreach ($m in Get-ChildItem bucket/*.json) {
+            $app = $m.BaseName
+            scoop install "local/$app"
+            if ($LASTEXITCODE -ne 0) { throw "scoop install $app failed" }
+            & $app --version
+            if ($LASTEXITCODE -ne 0) { throw "$app --version failed" }
+          }
