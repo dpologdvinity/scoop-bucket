@@ -26,10 +26,9 @@ jobs:
       - name: install and run every manifest
         shell: pwsh
         run: |
-          scoop bucket add local "$env:GITHUB_WORKSPACE"
           foreach ($m in Get-ChildItem bucket/*.json) {
             $app = $m.BaseName
-            scoop install "local/$app"
+            scoop install $m.FullName
             if ($LASTEXITCODE -ne 0) { throw "scoop install $app failed" }
             & $app --version
             if ($LASTEXITCODE -ne 0) { throw "$app --version failed" }
