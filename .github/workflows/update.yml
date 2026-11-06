@@ -11,6 +11,8 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    outputs:
+      ver: ${{ steps.up.outputs.ver }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - id: up
@@ -24,3 +26,11 @@ jobs:
           git add bucket
           git commit -m "feat: update ${{ steps.up.outputs.ver }}"
           git push
+
+  # Install the new manifests on Windows to prove they work.
+  test:
+    needs: update
+    if: needs.update.outputs.ver != 'unchanged'
+    uses: ./.github/workflows/test.yml
+    permissions:
+      contents: read
